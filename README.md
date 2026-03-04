@@ -1,5 +1,53 @@
-# logiGuard
-AI Workflow Guardian that interprets work events, identifies root causes, and takes actions
+logiguard/
+  README.md
+  LICENSE
+  .gitignore
+
+  agentdesignai_studio/
+    system_prompt.txt
+    tools_prototype.json
+    sample_events.json
+    reasoning_tests.md
+    output_schema.md
+
+  antigravity/
+    agent.yaml
+    tools/
+      sendEmail.yaml
+      httpRequest.yaml
+      writeToSheet.yaml
+      logEvent.yaml
+    events/
+      workflow_event.json
+    deployment_notes.md
+
+  backend_forwarder/
+    index.js
+    package.json
+    .env.example
+    README.md
+
+  demo/
+    demoscriptantigravity.md
+    pitchscript60s.md
+    curl_examples.md
+    screenshots/
+      aistudiotests.png
+      antigravity_console.png
+      event_flow.png
+
+  assets/
+    architecturediagramprompt.txt
+    branding_notes.md
+    submission_answers.md
+    logo_prompt.txt
+
+  docs/
+    architecture_overview.md
+    workflow_lifecycle.md
+    toolexecutionflow.md
+    eventschemareference.md
+`
 
 `markdown
 
