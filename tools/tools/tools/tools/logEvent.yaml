@@ -1,0 +1,10 @@
+
+`yaml
+name: logEvent
+description: "Write a structured log entry to the logging system."
+parameters:
+  message:
+    type: string
+required:
+  - message
+`
