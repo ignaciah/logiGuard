@@ -1,116 +1,96 @@
-logiguard/
-  README.md
-  LICENSE
-  .gitignore
-
-  agentdesignai_studio/
-    system_prompt.txt
-    tools_prototype.json
-    sample_events.json
-    reasoning_tests.md
-    output_schema.md
-
-  antigravity/
-    agent.yaml
-    tools/
-      sendEmail.yaml
-      httpRequest.yaml
-      writeToSheet.yaml
-      logEvent.yaml
-    events/
-      workflow_event.json
-    deployment_notes.md
-
-  backend_forwarder/
-    index.js
-    package.json
-    .env.example
-    README.md
-
-  demo/
-    demoscriptantigravity.md
-    pitchscript60s.md
-    curl_examples.md
-    screenshots/
-      aistudiotests.png
-      antigravity_console.png
-      event_flow.png
-
-  assets/
-    architecturediagramprompt.txt
-    branding_notes.md
-    submission_answers.md
-    logo_prompt.txt
-
-  docs/
-    architecture_overview.md
-    workflow_lifecycle.md
-    toolexecutionflow.md
-    eventschemareference.md
-`
-
 `markdown
 
-LogiGuard — Antigravity AI Workflow Guardian
+LogiGuard — AI Studio Design Environment
 
-LogiGuard is a hybrid AI Studio + Antigravity Live Agent that monitors workflow events, interprets them using Gemini reasoning, identifies root causes, and takes action using tools such as email, HTTP callbacks, Sheets, and logging.
-
-It turns noisy logs into clear, actionable narratives and helps workflows become self-healing.
-
----
-
-Features
-
-- Event-driven Live Agent
-- Structured JSON output
-- Tool orchestration (email, HTTP, Sheets, logs)
-- 30-day agent state retention
-- Thin backend forwarder
-- AI Studio prompt design + Antigravity runtime
-- Judge-ready demo and pitch
+This folder contains the design‑time version of the LogiGuard agent.  
+AI Studio is used as a safe, flexible environment to prototype reasoning, test event inputs, and refine the agent’s behavior before syncing stable updates to Antigravity.
 
 ---
 
-Architecture
+Purpose of This Folder
 
-See /docs/architectureoverview.md and /assets/architecturediagram_prompt.txt.
+- Experiment with LogiGuard’s reasoning
+- Test workflow events in a controlled environment
+- Validate JSON output structure
+- Iterate quickly without affecting the production agent
+- Keep prompts and test events organized for judges and collaborators
 
-High-level flow:
-
-1. Workflows send JSON events → /backend_forwarder
-2. Backend forwards events → Antigravity agent
-3. Agent interprets event → produces structured JSON
-4. Agent optionally calls tools
-5. Event + agent response stored in DB (optional)
-6. Demo uses curl + Antigravity console
+This folder does not contain tools or YAML.  
+It is intentionally lightweight so AI Studio never crashes.
 
 ---
 
-Running Locally
+Files in This Folder
 
-Backend
+1. system_prompt.txt
+The exact prompt you paste into the System Prompt box in AI Studio.  
+This version is:
+- flexible  
+- JSON‑safe  
+- tool‑free  
+- AI Studio‑friendly  
 
-`bash
-cd backend_forwarder
-npm install
-cp .env.example .env
-npm start
+2. sample_events.json
+A collection of ready‑to‑use test events.  
+Copy one event at a time into the User Message box in AI Studio.
+
+3. reasoning_tests.md
+A checklist of expected behaviors for:
+- error events  
+- warning events  
+- success events  
+
+Use this to verify LogiGuard is behaving correctly.
+
+4. output_schema.md
+The JSON contract that LogiGuard must follow in AI Studio.
+
+---
+
+How to Use This Folder in AI Studio
+
+1. Create a new Prompt project
+- Open AI Studio  
+- Click New → Prompt  
+- Name it: LogiGuard (AI Studio)
+
+2. Paste the system prompt
+Open system_prompt.txt and paste the entire contents into the System Prompt box.
+
+3. Paste a test event
+Open sample_events.json and copy one event into the User Message box.
+
+4. Run and verify
+Check that the output matches the structure in output_schema.md.
+
+---
+
+Important Notes
+
+- This prompt is only for AI Studio.  
+- Do not paste the Antigravity prompt here — it will crash AI Studio.  
+- AI Studio is your design lab, not your production environment.  
+- The production prompt lives in antigravity/agent.yaml.
+
+---
+
+Syncing With Antigravity
+
+When you improve LogiGuard’s reasoning in AI Studio:
+
+1. Update system_prompt.txt  
+2. Test with sample_events.json  
+3. Confirm behavior using reasoning_tests.md  
+4. Copy improvements into the Antigravity prompt only when stable
+
+This keeps your production agent predictable and your design environment flexible.
+
+---
+
+Summary
+
+This folder is your clean, stable, judge‑friendly workspace for designing LogiGuard’s intelligence.  
+Everything here is optimized for AI Studio’s behavior and avoids the formatting issues that can cause crashes.
+
 `
 
-Trigger events
-
-Use the curl commands in /demo/curl_examples.md.
-
----
-
-Deploying
-
-- Deploy backend to Cloud Run, Firebase Functions, or Vercel.
-- Deploy agent + tools to Antigravity.
-- Connect backend to Antigravity endpoint.
-
----
-
-Demo
-
-See /demo/demoscriptantigravity.md.
