@@ -1,0 +1,230 @@
+system_prompt.txt — AI Studio system prompt
+
+Create this file:
+
+`text
+logiguard/agentdesignaistudio/systemprompt.txt
+`
+
+Paste this inside:
+
+`text
+You are LogiGuard, an AI Workflow Guardian.
+
+Your mission:
+1. Understand workflow events (success, warning, error).
+2. Explain them in clear, human-friendly language.
+3. Identify the most likely root cause.
+4. Recommend a practical, actionable fix.
+5. Decide whether a human should be notified.
+
+Behavior rules:
+- Always analyze the event deeply before responding.
+- If severity = "error":
+    - Identify the root cause.
+    - Recommend a fix.
+    - should_notify = true.
+- If severity = "warning":
+    - Suggest optimizations or preventative actions.
+    - Notify only if the issue could escalate.
+- If severity = "success":
+    - Summarize the event clearly.
+    - No notification needed.
+- Keep explanations short, clear, and actionable.
+- Always return valid JSON.
+
+Output JSON format:
+{
+  "summary": "",
+  "root_cause": "",
+  "recommended_fix": "",
+  "should_notify": false,
+  "actions_taken": []
+}
+`
+
+This is the only text you’ll paste into the System Prompt box in AI Studio.
+
+---
+
+3. sample_events.json — test events
+
+Create:
+
+`text
+logiguard/agentdesignaistudio/sampleevents.json
+`
+
+Paste:
+
+`json
+{
+  "error_event": {
+    "workflow": "payment_processor",
+    "severity": "error",
+    "message": "Stripe API timeout",
+    "metadata": {
+      "orderId": "A-9921",
+      "retryCount": 3,
+      "region": "us-east1"
+    }
+  },
+  "warning_event": {
+    "workflow": "inventory_sync",
+    "severity": "warning",
+    "message": "External API response slow",
+    "metadata": {
+      "latency_ms": 1800,
+      "threshold_ms": 1200,
+      "vendor": "Shopify"
+    }
+  },
+  "success_event": {
+    "workflow": "order_fulfillment",
+    "severity": "success",
+    "message": "Order processed successfully",
+    "metadata": {
+      "orderId": "B-4412",
+      "items": 3,
+      "warehouse": "east-coast"
+    }
+  }
+}
+`
+
+You’ll copy one of these objects at a time into the User Message box in AI Studio.
+
+---
+
+4. reasoning_tests.md — how to sanity‑check behavior
+
+Create:
+
+`text
+logiguard/agentdesignaistudio/reasoningtests.md
+`
+
+Paste:
+
+`markdown
+
+LogiGuard — Reasoning Tests (AI Studio)
+
+1. Error event — payment_processor
+
+Input:
+- severity: error
+- message: "Stripe API timeout"
+
+Expect:
+- summary: clear explanation of failure.
+- root_cause: likely external API timeout / network issue.
+- recommended_fix: retry strategy, alert ops, check Stripe status.
+- should_notify: true.
+- actions_taken: [] (AI Studio version, no tools).
+
+2. Warning event — inventory_sync
+
+Input:
+- severity: warning
+- message: "External API response slow"
+
+Expect:
+- summary: performance degradation, not full outage.
+- root_cause: high load, slow vendor API, or network.
+- recommended_fix: monitor, consider retries, maybe vendor escalation.
+- should_notify: maybe true if far above threshold.
+
+3. Success event — order_fulfillment
+
+Input:
+- severity: success
+- message: "Order processed successfully"
+
+Expect:
+- summary: concise success description.
+- root_cause: "normal operation" or similar.
+- recommended_fix: "none" or "continue monitoring".
+- should_notify: false.
+`
+
+This is just documentation for you and judges.
+
+---
+
+5. output_schema.md — JSON contract
+
+Create:
+
+`text
+logiguard/agentdesignaistudio/outputschema.md
+`
+
+Paste:
+
+`markdown
+
+LogiGuard Output Schema (AI Studio)
+
+The agent must always return a single JSON object:
+
+`json
+{
+  "summary": "string",
+  "root_cause": "string",
+  "recommended_fix": "string",
+  "should_notify": true,
+  "actions_taken": []
+}
+`
+
+Field definitions
+
+- summary  
+  Short, human-readable explanation of what happened.
+
+- root_cause  
+  Most likely underlying cause of the event.
+
+- recommended_fix  
+  Practical, actionable next step.
+
+- should_notify  
+  true if a human should be notified.
+
+- actions_taken  
+  For AI Studio, usually an empty array: [].
+`
+
+---
+
+6. Recreate the AI Studio project (step‑by‑step)
+
+Now that the folder is rebuilt in GitHub, let’s rebuild the AI Studio project:
+
+1. Open AI Studio  
+2. Click New → Prompt  
+3. Name it: LogiGuard (AI Studio)  
+4. In System Prompt, paste the contents of system_prompt.txt  
+5. In User Message, paste one event, e.g.:
+
+   `json
+   {
+     "workflow": "payment_processor",
+     "severity": "error",
+     "message": "Stripe API timeout",
+     "metadata": {
+       "orderId": "A-9921",
+       "retryCount": 3,
+       "region": "us-east1"
+     }
+   }
+   `
+
+6. Click Run  
+7. Confirm the response is valid JSON with the keys:
+   - summary
+   - root_cause
+   - recommended_fix
+   - should_notify
+   - actions_taken
