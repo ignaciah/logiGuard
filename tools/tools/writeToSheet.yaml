@@ -1,0 +1,13 @@
+
+`yaml
+name: writeToSheet
+description: "Append a row to a reporting or incident tracking sheet."
+parameters:
+  sheetId:
+    type: string
+  row:
+    type: object
+required:
+  - sheetId
+  - row
+`
