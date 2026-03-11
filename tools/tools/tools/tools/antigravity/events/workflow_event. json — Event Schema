@@ -1,0 +1,12 @@
+`json
+{
+  "type": "object",
+  "properties": {
+    "workflow": { "type": "string" },
+    "severity": { "type": "string", "enum": ["success", "warning", "error"] },
+    "message": { "type": "string" },
+    "metadata": { "type": "object" }
+  },
+  "required": ["workflow", "severity", "message"]
+}
+`
