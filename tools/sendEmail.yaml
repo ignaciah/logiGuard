@@ -1,0 +1,15 @@
+`yaml
+name: send Email
+description: "Send an email alert to a human operator."
+parameters:
+  to:
+    type: string
+  subject:
+    type: string
+  body:
+    type: string
+required:
+  - to
+  - subject
+  - body
+`
