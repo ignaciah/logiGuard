@@ -1,0 +1,14 @@
+`yaml
+name: http Request
+description: "Trigger an external HTTP request for remediation or callbacks."
+parameters:
+  URL:
+    type: string
+  method:
+    type: string
+  body:
+    type: object
+required:
+  - url
+  - method
+`
